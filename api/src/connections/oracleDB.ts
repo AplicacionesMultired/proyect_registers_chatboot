@@ -15,8 +15,7 @@ const oracleDB = new Sequelize(DB, USER, PASSWORD,
   {
     dialect: 'oracle',
     host: HOST,
-    port: parseInt(PORT),
-    logging: false,
+    port: parseInt(PORT)
   }
 )
 
