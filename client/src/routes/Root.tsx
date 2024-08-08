@@ -1,7 +1,9 @@
 import { useAuth } from '../auth/AuthProvider'
 import { Outlet } from 'react-router-dom'
+
 import LoginPage from '../pages/Login'
 
+import NavBar from '../components/NavBar'
 import { Toaster } from 'sonner'
 
 const Root = () => {
@@ -13,6 +15,7 @@ const Root = () => {
 
   return (
     <>
+      <NavBar />
       <section className='pt-1'>
         <Outlet />
       </section>
