@@ -6,5 +6,4 @@ export interface ClientesChatBot{
   telwhats: string
   fregistro: string
   Existe: boolean
-  ERROR: string | null
 }

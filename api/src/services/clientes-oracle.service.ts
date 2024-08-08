@@ -15,9 +15,9 @@ export async function getClientesFromDB(documents: number[]) {
         const result = await connection.execute('SELECT DOCUMENTO FROM CLIENTES WHERE DOCUMENTO = :documento', [cc]);
 
         if (result.rows?.length === 0) {
-          return { DOCUMENTO: cc, Existe: false, ERROR: 'Cliente no encontrado' };
+          return { DOCUMENTO: cc, Existe: false };
         } else {
-          return { DOCUMENTO: cc, Existe: true, ERROR: null };
+          return { DOCUMENTO: cc, Existe: true };
         }
       } catch (queryError) {
         return { DOCUMENTO: cc, Existe: false, ERROR: 'Error al ejecutar la consulta', details: queryError };

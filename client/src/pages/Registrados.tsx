@@ -1,8 +1,8 @@
 import { ClientesChatBot } from '../types/Clientes.chat.bot'
+import TableClientes from '../components/TableClientes'
+import { useAuth } from '../auth/AuthProvider'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { useAuth } from '../auth/AuthProvider'
-import TableClientes from '../components/TableClientes'
 
 function Registrados () {
   const [clientes, setClientes] = useState<ClientesChatBot[]>([])

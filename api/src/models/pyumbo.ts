@@ -1,13 +1,9 @@
 import { chat_bot } from '../connections/chat-bot-92'
 import { DataTypes, Model, Optional } from 'sequelize'
+import { ClienteType } from '../schemas/Cliente.Schema'
 
-type PyumboAttributes = {
-  cedula: number;
-  nombre: string;
-  telefono: string;
-  correo: string;
-  telwhats: string;
-  fregistro: Date;
+interface PyumboAttributes extends  ClienteType{
+  fregistro?: Date;
 }
 
 type PyumboCreationAttributes = Optional<PyumboAttributes, 'cedula'>

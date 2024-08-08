@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom'
 
+import ClienteProfile from '../pages/ClienteProfile'
 import SinRegistro from '../pages/SinRegistro'
 import Registrados from '../pages/Registrados'
 import Dashboard from '../pages/Dashboard'
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: 'registrados',
         element: <Registrados />
+      },
+      {
+        path: 'cliente/:cc',
+        element: <ClienteProfile />
       }
     ]
   }
