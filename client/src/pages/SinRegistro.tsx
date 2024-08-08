@@ -16,7 +16,7 @@ function SinRegistro () {
       .catch(error => {
         console.log(error)
       })
-  }, [])
+  }, [user.company])
 
   return (
     <div className="mx-1  p-2 h-[83vh] overflow-y-auto rounded-md">

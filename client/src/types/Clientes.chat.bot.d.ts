@@ -5,5 +5,5 @@ export interface ClientesChatBot{
   correo: string
   telwhats: string
   fregistro: string
-  Existe: boolean
+  Existe?: boolean
 }
