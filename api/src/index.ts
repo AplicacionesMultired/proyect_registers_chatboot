@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(cors());
 app.use(mrg('dev'));
 
-app.use(ClientesRouter)
+app.use('/api/chat/v1', ClientesRouter)
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
