@@ -17,7 +17,7 @@ function LoginPage () {
   const handleSubmit = (ev: FormEvent) => {
     ev.preventDefault()
 
-    axios.post(`${LOGIN_URL}/login`, { username: user, password, app: 'cartera' })
+    axios.post(`${LOGIN_URL}/login`, { username: user, password, app: 'chat-bot' })
       .then(res => {
         if (res.status === 200) {
           setIsAuthenticated(true)
