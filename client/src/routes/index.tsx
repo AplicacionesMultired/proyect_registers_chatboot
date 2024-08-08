@@ -1,8 +1,11 @@
 import { createBrowserRouter } from 'react-router-dom'
-import Root from './Root'
+
+import ClienteProfile from '../pages/ClienteProfile'
+import SinRegistro from '../pages/SinRegistro'
+import Registrados from '../pages/Registrados'
 import Dashboard from '../pages/Dashboard'
 import NotFound from '../pages/NotFound'
-import SinRegistro from '../pages/SinRegistro'
+import Root from './Root'
 
 const router = createBrowserRouter([
   {
@@ -17,6 +20,14 @@ const router = createBrowserRouter([
       {
         path: 'sinregistro',
         element: <SinRegistro />
+      },
+      {
+        path: 'registrados',
+        element: <Registrados />
+      },
+      {
+        path: 'cliente/:cc',
+        element: <ClienteProfile />
       }
     ]
   }

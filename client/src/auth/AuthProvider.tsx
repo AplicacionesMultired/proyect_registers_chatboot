@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User>(InitialUser)
 
   useEffect(() => {
-    axios.get(`${LOGIN_URL}/profile`, { params: { app: 'cartera' } })
+    axios.get(`${LOGIN_URL}/profile`, { params: { app: 'chat-bot' } })
       .then(res => {
         if (res.status === 200) {
           setIsAuthenticated(true)

@@ -1,3 +1,36 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  background-color: #f8f8f8;
+  color: #333333;
+  font-weight: bold;
+  padding: 12px;
+  text-align: center;
+  border-bottom: 2px solid #dddddd;
+  box-shadow: 0 5px 8px -1px rgba(0, 0, 0, 0.1);
+}
+
+td {
+  padding: 12px;
+  border-bottom: 1px solid #dddddd;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #e6e6e6;
+}
+
+table caption {
+  font-weight: bold;
+  margin-bottom: 10px;
+}

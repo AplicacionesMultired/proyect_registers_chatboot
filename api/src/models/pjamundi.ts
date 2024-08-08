@@ -2,13 +2,13 @@ import { chat_bot } from '../connections/chat-bot-92'
 import { DataTypes, Model, Optional } from 'sequelize'
 import { ClienteType } from '../schemas/Cliente.Schema'
 
-interface PyumboAttributes extends  ClienteType{
+interface PjamundiAttributes extends ClienteType {
   fregistro?: Date;
 }
 
-type PyumboCreationAttributes = Optional<PyumboAttributes, 'cedula'>
+type PjamundiCreationAttributes = Optional<PjamundiAttributes, 'cedula'>
 
-class Pyumbo extends Model<PyumboAttributes, PyumboCreationAttributes> {
+class Pjamundi extends Model<PjamundiAttributes, PjamundiCreationAttributes> {
   declare cedula: number;
   declare nombre: string;
   declare telefono: string;
@@ -17,7 +17,7 @@ class Pyumbo extends Model<PyumboAttributes, PyumboCreationAttributes> {
   declare fregistro: Date;
 }
 
-Pyumbo.init({
+Pjamundi.init({
   cedula: { type: DataTypes.INTEGER, primaryKey: true, allowNull: false },
   nombre: { type: DataTypes.STRING, allowNull: false },
   telefono: { type: DataTypes.STRING, allowNull: false },
@@ -26,8 +26,8 @@ Pyumbo.init({
   fregistro: { type: DataTypes.DATE, allowNull: false }
 }, {
   sequelize: chat_bot,
-  tableName: 'personayumbo',
+  tableName: 'personajamundi',
   timestamps: false
 })
 
-export { Pyumbo }
+export { Pjamundi }
