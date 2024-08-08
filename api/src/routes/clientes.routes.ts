@@ -3,4 +3,4 @@ import { getClientes } from '../controllers/clientes.controller'
 
 export const ClientesRouter = Router();
 
-ClientesRouter.post('/clientes', getClientes)
+ClientesRouter.post('/c-oracle', getClientes)
