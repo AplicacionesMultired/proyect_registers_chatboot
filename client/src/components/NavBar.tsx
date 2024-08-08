@@ -54,7 +54,7 @@ function NavBar () {
       </ul>
       <ul className='flex justify-around py-2 border-t-2 font-medium'>
         <li>
-          <NavLink to='/dashboard' className='hover:text-yellow-300'>
+          <NavLink to='/' className='hover:text-yellow-300'>
             Dashboard
           </NavLink>
         </li>
