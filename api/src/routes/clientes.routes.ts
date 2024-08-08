@@ -3,4 +3,4 @@ import { getClientes } from '../controllers/clientes.controller'
 
 export const ClientesRouter = Router();
 
-ClientesRouter.get('/clientes', getClientes)
+ClientesRouter.post('/clientes', getClientes)

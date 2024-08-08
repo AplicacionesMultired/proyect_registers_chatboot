@@ -1,5 +1,3 @@
-import 'dotenv/config'
-
 import oracledb  from 'oracledb'
 import 'dotenv/config'
 
