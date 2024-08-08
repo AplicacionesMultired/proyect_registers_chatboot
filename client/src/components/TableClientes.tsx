@@ -11,8 +11,8 @@ function TableClientes ({ clientes }: { clientes: ClientesChatBot[] }) {
         <th>Correo</th>
         <th>WhatsApp</th>
         <th>Fecha de registro</th>
-        <th>Existe</th>
         <th>Estado </th>
+        <th>Existe</th>
         <th>Opciones</th>
       </tr>
     </thead>
@@ -26,12 +26,14 @@ function TableClientes ({ clientes }: { clientes: ClientesChatBot[] }) {
             <td>{cliente.correo}</td>
             <td>{cliente.telwhats}</td>
             <td>{cliente.fregistro}</td>
-            <td className={`${cliente.Existe === false ? 'bg-red-200' : 'bg-green-200'}`}>{cliente.Existe ? 'Sí' : 'No'}</td>
-            <td>{cliente.ERROR}</td>
             <td>
-              <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
-                Registrar
-              </button>
+              {cliente.ERROR === null ? 'Registrado' : 'Sin registrar' }
+            </td>
+            <td className={`${cliente.Existe === false ? 'bg-red-200' : 'bg-green-200'}`}>{cliente.Existe ? 'Sí' : 'No'}</td>
+            <td>
+              {cliente.ERROR === null
+                ? <button className='bg-yellow-500 hover:bg-yellow-300 text-white font-bold py-2 px-4 rounded'>Editar</button>
+                : <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>Registrar</button>}
             </td>
           </tr>
         ))
