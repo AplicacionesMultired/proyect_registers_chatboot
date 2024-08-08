@@ -1,23 +1,24 @@
-import { initOracleClient } from 'oracledb'
-import { Sequelize } from 'sequelize'
 import 'dotenv/config'
 
-const USER = process.env.ORACLE_DB_USER as string
-const PASSWORD = process.env.ORACLE_DB_PASS as string
-const HOST = process.env.ORACLE_DB_HOST as string
-const PORT = process.env.ORACLE_DB_PORT as string
-const DB = process.env.ORACLE_DB_NAME as string
-const PATH = process.env.ORACLE_DB_PATH as string
+import oracledb  from 'oracledb'
+import 'dotenv/config'
 
-initOracleClient({ libDir: PATH })
+// TODO: instanclient necesario para la conexión con la base de datos
+oracledb.initOracleClient({ libDir: 'C:\\instantclient_11_2' })
 
-const oracleDB = new Sequelize(DB, USER, PASSWORD,
-  {
-    dialect: 'oracle',
-    host: HOST,
-    port: parseInt(PORT)
-  }
-)
+export async function connPool () {
+    const pool = await oracledb.createPool({
+      user: process.env.ORACLE_DB_USER,
+      password: process.env.ORACLE_DB_PASSWORD,
+      connectString: 'DEMOPB',
+      configDir: 'C:\\instantclient_11_2\\network\\admin',
+      poolMax: 10
+    })
 
-export { oracleDB }
-
+    try {
+      let connection = await pool.getConnection()
+      return connection
+    } catch (error) {
+      throw error
+    }
+}

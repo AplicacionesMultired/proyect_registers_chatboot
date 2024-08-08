@@ -1,13 +1,21 @@
+import { connPool } from '../connections/oracleDB'
 import { Request, Response } from 'express'
-import { Cliente } from '../models/clientes.model'
+
+const Props = 'DOCUMENTO, NOMBRES, APELLIDO1, APELLIDO2, FECHANACIMIENTO, TELEFONO, MAIL'
 
 export async function getClientes(req: Request, res: Response) {
-  try {
-    const resulst = await Cliente.findAll()
+  const data = req.body
 
-    return res.status(200).json(resulst)
+  console.log(data)
+
+  try {
+    connPool()
+      .then(async (connection) => {
+        const result = await connection.execute(`SELECT ${Props} FROM CLIENTES WHERE DOCUMENTO = :documento`, [1118307852])
+        return  res.json(result.rows)
+      })
+      .catch((error) => { throw error })
   } catch (error) {
-    console.error(error)
-    return res.status(500).json({ message: 'Internal server error' })
+    return res.status(500).json(error)
   }
 }
