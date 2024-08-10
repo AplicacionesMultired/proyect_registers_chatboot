@@ -7,3 +7,14 @@ export interface ClientesChatBot{
   fregistro: string
   Existe?: boolean
 }
+
+export interface ClienteInfoI {
+  name1: string
+  name2: string
+  lastname1: string
+  lastname2: string
+  cedula: string
+  telefono: string
+  correo: string
+  telwhats: string
+}
