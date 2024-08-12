@@ -1,4 +1,4 @@
-import zod, { infer} from 'zod';
+import zod from 'zod';
 
 
 const ClienteSchema = zod.object({
