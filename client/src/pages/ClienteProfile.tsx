@@ -80,20 +80,21 @@ function ClienteProfile () {
   }
 
   return (
-    <section className='mx-1  p-2 h-[83vh] overflow-y-auto rounded-md'>
+    <section className='mx-1 h-[83vh] overflow-y-auto rounded-md'>
       <button className='bg-red-500 p-2 hover:bg-red-700 rounded-md w-72 text-white font-medium mb-4'
         onClick={() => navigate('/sinregistro')}>
         Volver Clientes Sin Registro
       </button>
 
-      <main className='flex p-2 border rounded-md bg-slate-300 w-full'>
-        <section className='flex w-1/2'>
-          <header className='flex items-center pt-8'>
+      <main className='flex w-full bg-gray-200 rounded-md gap-1'>
+
+        <section className='w-4/12 border border-gray-500 rounded-md flex items-center'>
+          <header className=''>
             <IdIcon size={180} />
           </header>
-          <div className='flex flex-col px-10'>
-            <h1 className='text-center font-semibold text-2xl pb-4'>Información Cliente</h1>
-            <p className='font-semibold text-lg'>Nombre: <span className='font-normal'>{cliente?.nombre}</span></p>
+          <div className=''>
+            <h1 className='text-center font-semibold text-2xl pb-2'>Información Cliente</h1>
+            <p className='font-semibold text-lg'>Nombres: <span className='font-normal'>{cliente?.nombre}</span></p>
             <p className='font-semibold text-lg'>Cédula: <span className='font-normal'> {cliente?.cedula}</span></p>
             <p className='font-semibold text-lg'>Teléfono: <span className='font-normal'>{cliente?.telefono}</span></p>
             <p className='font-semibold text-lg'>Correo: <span className='font-normal'>{cliente?.correo}</span></p>
@@ -103,7 +104,7 @@ function ClienteProfile () {
 
         </section>
 
-        <section className='flex flex-col justify-around w-72 px-3'>
+        <section className='w-1/12 border border-gray-500 rounded-md flex flex-col justify-around px-1'>
 
           <button className='bg-yellow-400 p-2 rounded-md text-black font-semibold hover:bg-yellow-500'
             name='Editar' onClick={ev => handleClickOpt(ev)}>
@@ -122,7 +123,9 @@ function ClienteProfile () {
 
         </section>
 
-        { stateclick === 'Editar' && (<FormEditClien handleUpdateUser={handleUpdateUser} handleChangeUser={handleChangeUser} clienteInfo={clienteInfo} />) }
+        <section className='w-7/12 border border-gray-500 rounded-md '>
+          { stateclick === 'Editar' && (<FormEditClien handleUpdateUser={handleUpdateUser} handleChangeUser={handleChangeUser} clienteInfo={clienteInfo} />) }
+        </section>
 
       </main>
 
