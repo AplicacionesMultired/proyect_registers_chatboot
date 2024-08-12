@@ -1,9 +1,11 @@
 import { Request, Response } from 'express'
-import { Pyumbo } from '../models/pyumbo' 
 
 import { getClientesFromDB } from '../services/clientes-oracle.service'
-import { Pjamundi } from '../models/pjamundi';
 import { validateCliente } from '../schemas/Cliente.Schema';
+
+import { Pyumbo } from '../models/pyumbo' 
+import { Pjamundi } from '../models/pjamundi';
+
 
 export async function getClientBycc(req:Request, res: Response) {
   const { company } = req.query
@@ -74,10 +76,9 @@ export async function getClientsSinRegistro (req: Request, res: Response){
 }
 
 export async function updateClienteSinRegistro (req: Request, res: Response){
-  const { company, option } = req.query
-  const resultValidate = await validateCliente(req.body)
+  const { data, company } = req.body
+  const resultValidate = await validateCliente(data)
 
-  console.log(company, option);
   console.log(resultValidate);
 
   try {
@@ -85,7 +86,17 @@ export async function updateClienteSinRegistro (req: Request, res: Response){
       return res.status(400).json(resultValidate.error)
     }
 
-    return res.status(200).json({ message: 'Cliente actualizado' })
+    if(company === 'Multired'){
+      await Pyumbo.sync()
+      await Pyumbo.update(data, { where: { cedula: data.cedula } })
+    } else if (company === 'Servired') {
+      await Pjamundi.sync()
+      await Pjamundi.update(data, { where: { cedula: data.cedula } })
+    } else {
+      return res.status(400).json({ message: 'company is required' })
+    }
+
+    return res.status(200).json({ message: 'Cliente Actualizado Correctamente' })
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: 'Internal server error' })

@@ -7,6 +7,7 @@ import { IdIcon } from '../components/icons'
 import axios from 'axios'
 
 import { FormEditClien } from '../components/FormEditClient'
+import { toast } from 'sonner'
 
 function ClienteProfile () {
   const { cc } = useParams<{ cc: string }>()
@@ -16,17 +17,15 @@ function ClienteProfile () {
   const [cliente, setCliente] = useState<Omit<ClientesChatBot, 'Existe'>>()
   const [stateclick, setStateClick] = useState('')
 
-  const [clienteInfo, setClienteInfo] = useState<ClienteInfoI>({ name1: '', name2: '', lastname1: '', lastname2: '', cedula: '', telefono: '', correo: '', telwhats: '' })
+  const [clienteInfo, setClienteInfo] = useState<ClienteInfoI>({ name1: '', name2: '', lastname1: '', lastname2: '', cedula: 0, telefono: '', correo: '', telwhats: '' })
+
+  const [update, setUpdate] = useState(false)
 
   useEffect(() => {
     axios.get(`/c-chat-bot/${cc}`, { params: { company: user.company } })
-      .then((response) => {
-        setCliente(response.data)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }, [cc, user.company])
+      .then(response => setCliente(response.data))
+      .catch(error => console.log(error))
+  }, [cc, user.company, update])
 
   function handleClickOpt (ev: MouseEvent<HTMLButtonElement>) {
     const { name } = ev.currentTarget
@@ -39,7 +38,7 @@ function ClienteProfile () {
         name2: nombre2,
         lastname1: apellido1,
         lastname2: apellido2,
-        cedula: cliente.cedula.toString(),
+        cedula: cliente.cedula,
         telefono: cliente.telefono,
         correo: cliente.correo,
         telwhats: cliente.telwhats
@@ -56,12 +55,24 @@ function ClienteProfile () {
     const telwhats = clienteInfo.telefono
     const data = { nombre, cedula, telefono, correo, telwhats }
 
-    console.log(data)
+    axios.patch('/c-chat-bot', { data, company: user.company })
+      .then(response => {
+        if (response.status === 200) {
+          setClienteInfo({ name1: '', name2: '', lastname1: '', lastname2: '', cedula: 0, telefono: '', correo: '', telwhats: '' })
+          setStateClick('')
+          setUpdate(!update)
+          toast.success('Cliente Actualizado', { description: 'El cliente ha sido actualizado correctamente' })
+        }
+      }
+      )
+      .catch(error => {
+        console.log(error)
+        toast.error('Error', { description: 'Ha ocurrido un error al actualizar el cliente' })
+      })
   }
 
   const handleChangeUser = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    console.log(name, value)
     setClienteInfo(prevState => ({
       ...prevState,
       [name]: value
@@ -111,9 +122,7 @@ function ClienteProfile () {
 
         </section>
 
-        {
-          stateclick === 'Editar' && (<FormEditClien handleUpdateUser={handleUpdateUser} handleChangeUser={handleChangeUser} clienteInfo={clienteInfo} />)
-        }
+        { stateclick === 'Editar' && (<FormEditClien handleUpdateUser={handleUpdateUser} handleChangeUser={handleChangeUser} clienteInfo={clienteInfo} />) }
 
       </main>
 

@@ -13,7 +13,7 @@ export interface ClienteInfoI {
   name2: string
   lastname1: string
   lastname2: string
-  cedula: string
+  cedula: number
   telefono: string
   correo: string
   telwhats: string
