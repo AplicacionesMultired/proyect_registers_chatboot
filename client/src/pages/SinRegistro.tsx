@@ -3,6 +3,7 @@ import TableClientes from '../components/TableClientes'
 import { useAuth } from '../auth/AuthProvider'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import { API_URL } from '../utils/contanst'
 
 function SinRegistro () {
   const [clientes, setClientes] = useState<ClientesChatBot[]>([])
@@ -11,7 +12,7 @@ function SinRegistro () {
   const [search, setSearch] = useState('')
 
   useEffect(() => {
-    axios.get('/c-chat-bot', { params: { company: user.company, option: 'sin-registro' } })
+    axios.get(`${API_URL}/c-chat-bot`, { params: { company: user.company, option: 'sin-registro' } })
       .then(response => {
         setClientes(response.data)
       })
