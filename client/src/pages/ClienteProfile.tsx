@@ -8,6 +8,7 @@ import axios from 'axios'
 
 import { FormEditClien } from '../components/FormEditClient'
 import { toast } from 'sonner'
+import { API_URL } from '../utils/contanst'
 
 function ClienteProfile () {
   const { cc } = useParams<{ cc: string }>()
@@ -22,7 +23,7 @@ function ClienteProfile () {
   const [update, setUpdate] = useState(false)
 
   useEffect(() => {
-    axios.get(`/c-chat-bot/${cc}`, { params: { company: user.company } })
+    axios.get(`${API_URL}/c-chat-bot/${cc}`, { params: { company: user.company } })
       .then(response => setCliente(response.data))
       .catch(error => console.log(error))
   }, [cc, user.company, update])
@@ -55,7 +56,7 @@ function ClienteProfile () {
     const telwhats = clienteInfo.telefono
     const data = { nombre, cedula, telefono, correo, telwhats }
 
-    axios.patch('/c-chat-bot', { data, company: user.company })
+    axios.patch(`${API_URL}/c-chat-bot`, { data, company: user.company })
       .then(response => {
         if (response.status === 200) {
           setClienteInfo({ name1: '', name2: '', lastname1: '', lastname2: '', cedula: 0, telefono: '', correo: '', telwhats: '' })

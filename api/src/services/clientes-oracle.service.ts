@@ -6,7 +6,8 @@ export async function getClientesFromDB(documents: number[]) {
   try {
     connection = await connPool();
   } catch (error) {
-    throw new Error('Error al conectar a la base de datos');
+    console.log(error);
+    throw new Error('Error al intentar conectar con la base de datos');
   }
 
   try {

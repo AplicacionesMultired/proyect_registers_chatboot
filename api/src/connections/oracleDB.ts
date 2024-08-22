@@ -1,15 +1,20 @@
 import oracledb  from 'oracledb'
 import 'dotenv/config'
 
-// TODO: instanclient necesario para la conexión con la base de datos
-oracledb.initOracleClient({ libDir: 'C:\\instantclient_11_2' })
+const oracleLibDir = process.env.ORACLE_DB_DIR
+const username = process.env.ORACLE_DB_USER
+const password = process.env.ORACLE_DB_PASSWORD
+const connectString = process.env.ORACLE_DB_STRING
+const diroracleadm = process.env.ORACLE_DB_DIR
+
+oracledb.initOracleClient({ libDir: oracleLibDir })
 
 export async function connPool () {
     const pool = await oracledb.createPool({
-      user: process.env.ORACLE_DB_USER,
-      password: process.env.ORACLE_DB_PASSWORD,
-      connectString: 'DEMOPB',
-      configDir: 'C:\\instantclient_11_2\\network\\admin',
+      user: username,
+      password: password,
+      connectString: connectString,
+      configDir: diroracleadm,
       poolMax: 10
     })
 

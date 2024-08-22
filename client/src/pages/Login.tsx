@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { UserIcon, LockIcon } from '../components/icons'
 import { Input, Button, Label } from '../components/ui'
 import { useAuth } from '../auth/AuthProvider'
@@ -6,22 +5,21 @@ import { useState, FormEvent } from 'react'
 import { toast, Toaster } from 'sonner'
 import axios from 'axios'
 
-import { LOGIN_URL } from '../utils/contanst'
+import { LOGIN_URL, APP_NAME } from '../utils/contanst'
 
 function LoginPage () {
-  const { setIsAuthenticated, setUser: setUserContext } = useAuth()
+  const { setIsAuthenticated } = useAuth()
+  const [username, setUsername] = useState('')
   const [errorString, setErrorString] = useState('')
   const [password, setPassword] = useState('')
-  const [user, setUser] = useState('')
 
   const handleSubmit = (ev: FormEvent) => {
     ev.preventDefault()
 
-    axios.post(`${LOGIN_URL}/login`, { username: user, password, app: 'chat-bot' })
+    axios.post(`${LOGIN_URL}/login`, { username, password, app: APP_NAME })
       .then(res => {
         if (res.status === 200) {
           setIsAuthenticated(true)
-          setUserContext(res.data.usuario)
         }
       })
       .catch(error => {
@@ -35,14 +33,14 @@ function LoginPage () {
       .finally(() => {
         setTimeout(() => {
           setErrorString('')
-        }, 5000)
+        }, 4000)
       })
   }
 
   return (
     <section className="w-screen h-screen flex bg-gradient-to-b from-blue-200 to-blue-300 relative">
-      <section className='w-full grid place-content-center'>
-        <form className='min-w-96 flex flex-col gap-8' onSubmit={handleSubmit}>
+      <section className='w-full grid place-content-center '>
+        <form className='min-w-96 flex flex-col gap-8 bg-gray-200 py-10 px-16 rounded-lg shadow-lg' onSubmit={handleSubmit}>
           <figure className='flex items-center justify-center'>
             <img src="/gane.webp" alt="logo de gane" className='w-[220px] ' />
           </figure>
@@ -51,8 +49,8 @@ function LoginPage () {
             <div className='flex items-center gap-2 w-full justify-around px-2'>
               <UserIcon />
               <Input name='username' type='text' placeholder='CP1118342523' required
-                autoComplete='username' value={user}
-                onChange={(ev) => { setUser(ev.target.value) }} />
+                autoComplete='username' value={username}
+                onChange={(ev) => { setUsername(ev.target.value) }} />
             </div>
           </article>
 
