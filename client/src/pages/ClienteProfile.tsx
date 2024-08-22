@@ -56,7 +56,7 @@ function ClienteProfile () {
     const telwhats = clienteInfo.telefono
     const data = { nombre, cedula, telefono, correo, telwhats }
 
-    axios.patch(`${API_URL}/c-chat-bot`, { data, company: user.company, update: cc })
+    axios.patch(`${API_URL}/c-chat-bot`, { data, company: user.company })
       .then(response => {
         if (response.status === 200) {
           setClienteInfo({ name1: '', name2: '', lastname1: '', lastname2: '', cedula: 0, telefono: '', correo: '', telwhats: '' })
@@ -74,17 +74,10 @@ function ClienteProfile () {
 
   const handleChangeUser = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    if (name === 'cedula') {
-      setClienteInfo(prevState => ({
-        ...prevState,
-        [name]: Number(value)
-      }))
-    } else {
-      setClienteInfo(prevState => ({
-        ...prevState,
-        [name]: value
-      }))
-    }
+    setClienteInfo(prevState => ({
+      ...prevState,
+      [name]: value
+    }))
   }
 
   return (

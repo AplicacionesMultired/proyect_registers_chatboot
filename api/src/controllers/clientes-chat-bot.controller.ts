@@ -77,14 +77,27 @@ export async function getClientsSinRegistro (req: Request, res: Response){
 }
 
 export async function updateClienteSinRegistro (req: Request, res: Response) {
-  const { data, company, update } = req.body
+  const { data, company } = req.body
   const result = await validateCliente(data)
-  
-  try {
-    
-  } catch (error) {
-    
+
+  if (!result.success) {
+    return res.status(400).json({ message: result.error.message })
   }
 
+  try {
+    if (company === 'Multired'){
+      await Pyumbo.sync()
+      const client = await Pyumbo.update(result.data, { where: { cedula: data.cedula } })
+      return res.status(200).json(client[0])
+    } else if (company === 'Servired') {
+      await Pjamundi.sync()
+      const client = await Pjamundi.update(result.data, { where: { cedula: data.cedula } })
+      return res.status(200).json(client[0])
+    } else {
+      return res.status(400).json({ message: 'company is required' })
+    }
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal server error' })
+  }
 
 }

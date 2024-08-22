@@ -25,7 +25,7 @@ function FormEditClien (
         </div>
         <div>
           <label className='block text-gray-700'>Cédula:</label>
-          <input className='w-full p-2 border border-gray-300 rounded-md' type='number' name='cedula' onChange={handleChangeUser} value={clienteInfo.cedula} />
+          <input className='w-full p-2 border border-gray-300 rounded-md' value={clienteInfo.cedula} readOnly />
         </div>
         <div>
           <label className='block text-gray-700'>Teléfono:</label>
