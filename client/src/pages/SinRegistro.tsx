@@ -1,30 +1,10 @@
-import { ClientesChatBot } from '../types/Clientes.chat.bot'
 import TableClientes from '../components/TableClientes'
+import { useClients } from '../hooks/useClients'
 import { useAuth } from '../auth/AuthProvider'
-import { useEffect, useState } from 'react'
-import axios from 'axios'
-
-import { API_URL } from '../utils/contanst'
 
 function SinRegistro () {
-  const [clientes, setClientes] = useState<ClientesChatBot[]>([])
   const { user } = useAuth()
-
-  const [search, setSearch] = useState('')
-
-  useEffect(() => {
-    axios.get(`${API_URL}/c-chat-bot`, { params: { company: user.company, option: 'sin-registro' } })
-      .then(response => {
-        setClientes(response.data)
-      })
-      .catch(error => {
-        console.log(error)
-      })
-  }, [user.company])
-
-  const clientesFilter = clientes.filter(cliente => {
-    return cliente.nombre.toLowerCase().includes(search.toLowerCase()) || cliente.cedula.toString().includes(search)
-  })
+  const { clientesFilter, search, setSearch } = useClients('sin-registro', user.company)
 
   return (
     <section className="mx-1  p-2 h-[83vh] overflow-y-auto rounded-md">

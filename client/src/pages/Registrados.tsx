@@ -1,16 +1,10 @@
 import TableClientes from '../components/TableClientes'
-import { useAuth } from '../auth/AuthProvider'
-import { useState } from 'react'
 import { useClients } from '../hooks/useClients'
+import { useAuth } from '../auth/AuthProvider'
 
 function Registrados () {
   const { user } = useAuth()
-  const { clientes } = useClients('registrados', user.company)
-  const [search, setSearch] = useState<string>('')
-
-  const clientesFilter = clientes.filter(cliente => {
-    return cliente.nombre.toLowerCase().includes(search.toLowerCase()) || cliente.cedula.toString().includes(search)
-  })
+  const { clientesFilter, setSearch, search } = useClients('con-registro', user.company)
 
   return (
     <div className="mx-1  p-2 h-[83vh] overflow-y-auto rounded-md">
