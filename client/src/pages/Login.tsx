@@ -19,7 +19,6 @@ function LoginPage () {
     axios.post(`${LOGIN_URL}/login`, { username, password, app: APP_NAME })
       .then(res => {
         if (res.status === 200) {
-          console.log(res.data)
           setIsAuthenticated(true)
         }
       })
@@ -40,8 +39,8 @@ function LoginPage () {
 
   return (
     <section className="w-screen h-screen flex bg-gradient-to-b from-blue-200 to-blue-300 relative">
-      <section className='w-full grid place-content-center'>
-        <form className='min-w-96 flex flex-col gap-8' onSubmit={handleSubmit}>
+      <section className='w-full grid place-content-center '>
+        <form className='min-w-96 flex flex-col gap-8 bg-gray-200 py-10 px-16 rounded-lg shadow-lg' onSubmit={handleSubmit}>
           <figure className='flex items-center justify-center'>
             <img src="/gane.webp" alt="logo de gane" className='w-[220px] ' />
           </figure>
