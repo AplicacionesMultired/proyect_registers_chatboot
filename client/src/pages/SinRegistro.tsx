@@ -3,6 +3,7 @@ import TableClientes from '../components/TableClientes'
 import { useAuth } from '../auth/AuthProvider'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+
 import { API_URL } from '../utils/contanst'
 
 function SinRegistro () {

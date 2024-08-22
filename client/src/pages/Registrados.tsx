@@ -1,23 +1,12 @@
-import { ClientesChatBot } from '../types/Clientes.chat.bot'
 import TableClientes from '../components/TableClientes'
 import { useAuth } from '../auth/AuthProvider'
-import { useEffect, useState } from 'react'
-import axios from 'axios'
+import { useState } from 'react'
+import { useClients } from '../hooks/useClients'
 
 function Registrados () {
-  const [clientes, setClientes] = useState<ClientesChatBot[]>([])
-  const [search, setSearch] = useState<string>('')
   const { user } = useAuth()
-
-  useEffect(() => {
-    axios.get('/c-chat-bot', { params: { company: user.company, option: 'con-registro' } })
-      .then(response => {
-        setClientes(response.data)
-      })
-      .catch(error => {
-        console.log(error)
-      })
-  }, [user.company])
+  const { clientes } = useClients('registrados', user.company)
+  const [search, setSearch] = useState<string>('')
 
   const clientesFilter = clientes.filter(cliente => {
     return cliente.nombre.toLowerCase().includes(search.toLowerCase()) || cliente.cedula.toString().includes(search)
