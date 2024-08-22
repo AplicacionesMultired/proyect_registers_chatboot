@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, Dispatch, ReactNode, SetStateAction } from 'react'
-import { LOGIN_URL } from '../utils/contanst'
+import { LOGIN_URL, APP_NAME } from '../utils/contanst'
 import { type User } from '../types/User'
 import axios from 'axios'
 
@@ -15,11 +15,19 @@ const InitialUser: User = { username: '', email: '', names: '', lastnames: '', c
 const AuthContext = createContext<IAuthContext | undefined>(undefined)
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [user, setUser] = useState<User>(InitialUser)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   useEffect(() => {
-    axios.get(`${LOGIN_URL}/profile`, { params: { app: 'chat-bot' } })
+    const cookie = document.cookie
+
+    if (!cookie && cookie.split('=')[0] !== APP_NAME) {
+      setIsAuthenticated(false)
+      setUser(InitialUser)
+      return
+    }
+
+    axios.get(`${LOGIN_URL}/profile`, { params: { app: APP_NAME } })
       .then(res => {
         if (res.status === 200) {
           setIsAuthenticated(true)
@@ -27,12 +35,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
       })
       .catch(error => {
+        console.log(error)
         if (error.response.status === 401) {
           setIsAuthenticated(false)
           setUser(InitialUser)
         }
       })
-  }, [setIsAuthenticated])
+  }, [isAuthenticated])
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, user, setUser }}>

@@ -6,7 +6,6 @@ import { StrictMode } from 'react'
 import './index.css'
 import axios from 'axios'
 
-axios.defaults.baseURL = 'http://localhost:3000/api/chat/v1'
 axios.defaults.withCredentials = true
 
 const root = createRoot(document.getElementById('root')!)

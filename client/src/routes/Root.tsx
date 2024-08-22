@@ -15,7 +15,6 @@ const Root = () => {
   }
 
   return (
-
     user.company === 'MultiredYServired'
       ? <CambiarCompany />
       : (

@@ -1,9 +1,20 @@
 import { NavLink } from 'react-router-dom'
 import { useAuth } from '../auth/AuthProvider'
 import { UserIcon } from './icons'
+import axios from 'axios'
+import { LOGIN_URL } from '../utils/contanst'
 
 function NavBar () {
-  const { user } = useAuth()
+  const { user, setIsAuthenticated } = useAuth()
+
+  const handleLogout = () => {
+    const token = document.cookie
+    axios.post(`${LOGIN_URL}/logout`, { token })
+      .then((res) => {
+        if (res.status === 200) setIsAuthenticated(false)
+      })
+      .catch(err => console.log(err))
+  }
 
   return (
     <nav className="bg-slate-600 m-1 rounded-md text-white shadow-lg">
@@ -47,7 +58,7 @@ function NavBar () {
           <button className='bg-yellow-500 rounded-md w-60 py-1 text-black shadow-md hover:bg-yellow-300 transition-all'>
             Cambiar Contraseña
           </button>
-          <button className='bg-blue-700 rounded-md w-60 py-1 shadow-md hover:bg-blue-500 transition-all'>
+          <button className='bg-blue-700 rounded-md w-60 py-1 shadow-md hover:bg-blue-500 transition-all' onClick={() => handleLogout()}>
             Cerrar Sesión
           </button>
         </li>
@@ -64,7 +75,7 @@ function NavBar () {
           </NavLink>
         </li>
         <li>
-        <NavLink to='/registrados' className='hover:text-yellow-300'>
+          <NavLink to='/registrados' className='hover:text-yellow-300'>
             Registrados
           </NavLink>
         </li>

@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { UserIcon, LockIcon } from '../components/icons'
 import { Input, Button, Label } from '../components/ui'
 import { useAuth } from '../auth/AuthProvider'
@@ -6,22 +5,22 @@ import { useState, FormEvent } from 'react'
 import { toast, Toaster } from 'sonner'
 import axios from 'axios'
 
-import { LOGIN_URL } from '../utils/contanst'
+import { LOGIN_URL, APP_NAME } from '../utils/contanst'
 
 function LoginPage () {
-  const { setIsAuthenticated, setUser: setUserContext } = useAuth()
+  const { setIsAuthenticated } = useAuth()
+  const [username, setUsername] = useState('')
   const [errorString, setErrorString] = useState('')
   const [password, setPassword] = useState('')
-  const [user, setUser] = useState('')
 
   const handleSubmit = (ev: FormEvent) => {
     ev.preventDefault()
 
-    axios.post(`${LOGIN_URL}/login`, { username: user, password, app: 'chat-bot' })
+    axios.post(`${LOGIN_URL}/login`, { username, password, app: APP_NAME })
       .then(res => {
         if (res.status === 200) {
+          console.log(res.data)
           setIsAuthenticated(true)
-          setUserContext(res.data.usuario)
         }
       })
       .catch(error => {
@@ -35,7 +34,7 @@ function LoginPage () {
       .finally(() => {
         setTimeout(() => {
           setErrorString('')
-        }, 5000)
+        }, 4000)
       })
   }
 
@@ -51,8 +50,8 @@ function LoginPage () {
             <div className='flex items-center gap-2 w-full justify-around px-2'>
               <UserIcon />
               <Input name='username' type='text' placeholder='CP1118342523' required
-                autoComplete='username' value={user}
-                onChange={(ev) => { setUser(ev.target.value) }} />
+                autoComplete='username' value={username}
+                onChange={(ev) => { setUsername(ev.target.value) }} />
             </div>
           </article>
 
