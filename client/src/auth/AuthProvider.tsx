@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState, Dispatch, ReactNode, Se
 import { LOGIN_URL, APP_NAME } from '../utils/contanst'
 import { type User } from '../types/User'
 import axios from 'axios'
+import { LogoutAndDeleteToken } from '../services/logOut'
 
 interface IAuthContext {
   isAuthenticated: boolean
@@ -35,8 +36,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
       })
       .catch(error => {
-        console.log(error)
         if (error.response.status === 401) {
+          LogoutAndDeleteToken()
           setIsAuthenticated(false)
           setUser(InitialUser)
         }

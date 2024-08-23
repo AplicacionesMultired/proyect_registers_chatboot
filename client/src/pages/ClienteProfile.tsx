@@ -9,6 +9,7 @@ import axios from 'axios'
 import { FormEditClien } from '../components/FormEditClient'
 import { toast } from 'sonner'
 import { API_URL } from '../utils/contanst'
+import FormRegister from '../components/FormRegister'
 
 function ClienteProfile () {
   const { cc } = useParams<{ cc: string }>()
@@ -67,8 +68,13 @@ function ClienteProfile () {
       }
       )
       .catch(error => {
-        console.log(error)
-        toast.error('Error', { description: 'Ha ocurrido un error al actualizar el cliente' })
+        if (error.response.status === 400) {
+          toast.error((error.response.data.message || 'Error Al Actualizar'),
+            { description: (error.response.data.errors[0] || 'No se puede actualizar el usuario') }
+          )
+        } else {
+          toast.error('Error Al Actualizar', { description: 'Ha ocurrido un error al actualizar el cliente' })
+        }
       })
   }
 
@@ -81,32 +87,32 @@ function ClienteProfile () {
   }
 
   return (
-    <section className='mx-1 h-[83vh] overflow-y-auto rounded-md'>
-      <button className='bg-red-500 p-2 hover:bg-red-700 rounded-md w-72 text-white font-medium mb-4'
+    <section className='mx-1 h-[80vh] overflow-y-auto rounded-md relative'>
+
+      <button className='bg-red-500 p-2 hover:bg-red-700 rounded-md w-64 text-white font-medium mb-4 absolute'
         onClick={() => navigate('/sinregistro')}>
         Volver Clientes Sin Registro
       </button>
 
-      <main className='flex w-full bg-gray-200 rounded-md gap-1'>
+      <section className='flex items-center justify-center gap-6 py-4'>
+        <header className='pt-8'>
+          <IdIcon size={180} />
+        </header>
 
-        <section className='w-4/12 border border-gray-500 rounded-md flex items-center'>
-          <header className=''>
-            <IdIcon size={180} />
-          </header>
-          <div className=''>
-            <h1 className='text-center font-semibold text-2xl pb-2'>Información Cliente</h1>
-            <p className='font-semibold text-lg'>Nombres: <span className='font-normal'>{cliente?.nombre}</span></p>
-            <p className='font-semibold text-lg'>Cédula: <span className='font-normal'> {cliente?.cedula}</span></p>
-            <p className='font-semibold text-lg'>Teléfono: <span className='font-normal'>{cliente?.telefono}</span></p>
-            <p className='font-semibold text-lg'>Correo: <span className='font-normal'>{cliente?.correo}</span></p>
-            <p className='font-semibold text-lg'>Whatsapp: <span className='font-normal'>{cliente?.telwhats}</span></p>
-            <p className='font-semibold text-lg'>Fecha de registro: <span className='font-normal'>{cliente?.fregistro}</span></p>
-          </div>
+        <div className=''>
 
-        </section>
+          <h1 className='text-2xl font-semibold text-center pb-2'>Información Cliente</h1>
+          <article className='font-semibold text-xl'>
+            <p>Nombres: <span className='font-normal'>{cliente?.nombre}</span></p>
+            <p>Cédula: <span className='font-normal'> {cliente?.cedula}</span></p>
+            <p>Teléfono: <span className='font-normal'>{cliente?.telefono}</span></p>
+            <p>Correo: <span className='font-normal'>{cliente?.correo}</span></p>
+            <p>Whatsapp: <span className='font-normal'>{cliente?.telwhats}</span></p>
+            <p>Fecha de registro: <span className='font-normal'>{cliente?.fregistro}</span></p>
+          </article>
+        </div>
 
-        <section className='w-1/12 border border-gray-500 rounded-md flex flex-col justify-around px-1'>
-
+        <section className='flex flex-col gap-4 w-64'>
           <button className='bg-yellow-400 p-2 rounded-md text-black font-semibold hover:bg-yellow-500'
             name='Editar' onClick={ev => handleClickOpt(ev)}>
             Editar
@@ -121,14 +127,14 @@ function ClienteProfile () {
             name='Eliminar' onClick={ev => handleClickOpt(ev)}>
             Eliminar
           </button>
-
         </section>
 
-        <section className='w-7/12 border border-gray-500 rounded-md '>
-          { stateclick === 'Editar' && (<FormEditClien handleUpdateUser={handleUpdateUser} handleChangeUser={handleChangeUser} clienteInfo={clienteInfo} />) }
-        </section>
+      </section>
 
-      </main>
+      <section>
+        {stateclick === 'Editar' && (<FormEditClien handleUpdateUser={handleUpdateUser} handleChangeUser={handleChangeUser} clienteInfo={clienteInfo} />)}
+        {stateclick === 'Registrar' && (<FormRegister cliente={clienteInfo} />)}
+      </section>
 
     </section>
   )
