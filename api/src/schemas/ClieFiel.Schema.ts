@@ -35,8 +35,8 @@ const ClieFielSchema = zod.object({
   }),
   genero: zod.string({
     message: 'genero must be a string',
-    description: 'genero is required',
-  }).min(1, { message: 'genero is required' })
+    description: 'El genero es requerido',
+  }).min(1, { message: 'El genero es requerido' })
 });
 
 export type ClieFielType = zod.infer<typeof ClieFielSchema>

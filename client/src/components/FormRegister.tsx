@@ -1,7 +1,8 @@
-import { useState } from 'react'
 import { ClienteInfoI } from '../types/Clientes.chat.bot'
-import axios from 'axios'
 import { API_URL } from '../utils/contanst'
+import { useState } from 'react'
+import { toast } from 'sonner'
+import axios from 'axios'
 
 function FormRegister ({ cliente }: { cliente: ClienteInfoI }) {
   const [genero, setGenero] = useState('')
@@ -9,7 +10,14 @@ function FormRegister ({ cliente }: { cliente: ClienteInfoI }) {
   const handleSubmit = () => {
     axios.post(`${API_URL}/register`, { ...cliente, genero })
       .then(res => console.log(res))
-      .catch(err => console.log(err))
+      .catch(err => {
+        if (err.response.status === 400) {
+          toast.error((err.response.data?.message || 'Error al crear cliente'),
+            { description: err.response.data?.errors[0] || 'No se puede crear cliente, consulte al admin' })
+        } else {
+          toast.error('Error al crear cliente', { description: 'Ha ocurrido un error al crear el cliente' })
+        }
+      })
   }
 
   return (

@@ -114,7 +114,8 @@ export async function createClienteFiel(req: Request, res: Response) {
     const result = await ValidateSchemaClienteFiel(req.body)
 
     if (!result.success) {
-      return res.status(400).json(result.error)
+      return res.status(400).json({ message: 'Error en la validación de datos', 
+        errors: result.error.issues.map( (issue: ZodIssue) => { return issue.message } )})
     }
 
     console.log(result.data);
