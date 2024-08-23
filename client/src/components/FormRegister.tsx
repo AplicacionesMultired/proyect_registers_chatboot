@@ -3,12 +3,14 @@ import { API_URL } from '../utils/contanst'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import axios from 'axios'
+import { useAuth } from '../auth/AuthProvider'
 
 function FormRegister ({ cliente }: { cliente: ClienteInfoI }) {
   const [genero, setGenero] = useState('')
+  const { user } = useAuth()
 
   const handleSubmit = () => {
-    axios.post(`${API_URL}/register`, { ...cliente, genero })
+    axios.post(`${API_URL}/register`, { ...cliente, genero, user: user.username })
       .then(res => console.log(res))
       .catch(err => {
         if (err.response.status === 400) {

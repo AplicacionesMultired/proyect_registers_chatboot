@@ -9,9 +9,6 @@ import { Pjamundi } from '../models/pjamundi';
 import { ValidateSchemaClienteFiel } from '../schemas/ClieFiel.Schema';
 import { ZodIssue } from 'zod';
 
-const properties = 'DOCUMENTO,TOTALPUNTOS,USUARIO,FECHASYS,NOMBRES,APELLIDO1,APELLIDO2,FECHANACIMIENTO,TELEFONO,DIRECCION,TIPO_DEPTO,CODDEPTO,TIPO_MUNICIPIO,CODMUNICIPIO,ENT_SEXO,DAT_DTO_SEXO,DOCALTERNO,NRO_FAVORITO,VERSION,CCOSTO,MAIL,NOMBRE1,NOMBRE2,CELULAR,ACEPTAPOLITICATDP,CLIENTEVENDEDOR,CLAVECANAL,TPOTRT_CODIGO_NACION,TRT_CODIGO_NACION,TPOTRT_CODIGO_EXPDOC,TRT_CODIGO_EXPDOC,FECHAEXPDOC,DTO_CODIGO_TPDOC,ENT_CODIGO_TPDOC,IDLOGIN,SECURITY_TOKEN'
-
-
 export async function getClientBycc(req:Request, res: Response) {
   const { company } = req.query
 
@@ -118,19 +115,28 @@ export async function createClienteFiel(req: Request, res: Response) {
         errors: result.error.issues.map( (issue: ZodIssue) => { return issue.message } )})
     }
 
-    console.log(result.data);
-    
-    // const connection = await connPool()
-    // const query = await connection.execute(`
-    //   INSERT INTO GAMBLE.CLIENTES (${properties}) values ('43456545','u+#^maj^QÕ','CP1118307852',
-    //   to_date('10/10/24', 'DD/MM/RR'),'Ivan Daniel', 'Ortega','Garzon',to_date('01/01/97','DD/MM/RR'), '6696901','Cra 4 # 4-51',
-    //   '6','30','8','965', '60', '34', '43456545','','0','0','exampe24124@gmail.com', 'Ivan', 'Daniel', '4151234151','S', 'N',
-    //   'CHATBOOT', '2', '1','8','76892', to_date('01/01/15','DD/MM/RR'), '35', '70', null,null)`
-    // )
+    const connection = await connPool()
 
-    // console.log(query);
+    const query = await connection.execute(`
+      INSERT INTO GAMBLE.CLIENTES (DOCUMENTO,TOTALPUNTOS,USUARIO,FECHASYS,NOMBRES,APELLIDO1,APELLIDO2,FECHANACIMIENTO,TELEFONO,DIRECCION,TIPO_DEPTO,CODDEPTO,TIPO_MUNICIPIO,CODMUNICIPIO,ENT_SEXO,DAT_DTO_SEXO,DOCALTERNO,NRO_FAVORITO,VERSION,CCOSTO,MAIL,NOMBRE1,NOMBRE2,CELULAR,ACEPTAPOLITICATDP,CLIENTEVENDEDOR,CLAVECANAL,TPOTRT_CODIGO_NACION,TRT_CODIGO_NACION,TPOTRT_CODIGO_EXPDOC,TRT_CODIGO_EXPDOC,FECHAEXPDOC,DTO_CODIGO_TPDOC,ENT_CODIGO_TPDOC,IDLOGIN,SECURITY_TOKEN) 
+      VALUES ('${result.data.cedula}','u+#ajÕ', '${result.data.user}',to_date('19/01/97', 'DD/MM/RR'),'${result.data.name1} ${result.data.name2}', '${result.data.lastname1}','${result.data.lastname2}',to_date('23/08/24','DD/MM/RR'), '6696901','Cra 4 # 4-51', '6','30','8','965', '60', '${result.data.genero}', '${result.data.cedula}','','0','0','${result.data.correo}', '${result.data.name1}', '${result.data.name2}', '${result.data.cedula}','S', 'N', 'CHATBOOT', '2', '1','8','76892',to_date('01/01/15','DD/MM/RR'), '35', '70', null,null)`
+    )
+
+    if(query.rowsAffected === 1){
+      await connection.commit()
+      await connection.close()
+      return res.status(201).json({ message: 'Cliente creado con éxito' })
+    } else {
+      await connection.rollback()
+      await connection.close()
+      return res.status(500).json({ message: 'Error al crear cliente' })
+    }
+
+   
+  
 
   } catch (error) {
+    
     console.log(error);
     return res.status(500).json({ message: 'Internal server error' })
   }
