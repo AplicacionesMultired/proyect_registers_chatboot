@@ -9,7 +9,7 @@ const ClienteSchema = zod.object({
   nombre: zod.string({
     message: 'Nombre must be a string',
     description: 'Nombre is required',
-  }),
+  }).min(5, { message: 'Nombres is required' }),
   telefono: zod.string({
     message: 'Telefono must be a string',
     description: 'Telefono is required',

@@ -45,8 +45,8 @@ function FormRegister ({ cliente }: { cliente: ClienteInfoI }) {
           <h3 className='font-semibold text-gray-700 w-44'>Género:</h3>
           <select className='border border-gray-300 rounded-md p-2' onChange={(ev) => setGenero(ev.target.value)}>
             <option value=''>Seleccione</option>
-            <option value='masculino'>Masculino</option>
-            <option value='femenino'>Femenino</option>
+            <option value='34'>Masculino</option>
+            <option value='33'>Femenino</option>
           </select>
         </div>
       </form>
