@@ -4,14 +4,21 @@ import { useState } from 'react'
 import { toast } from 'sonner'
 import axios from 'axios'
 import { useAuth } from '../auth/AuthProvider'
+import { useNavigate } from 'react-router-dom'
 
 function FormRegister ({ cliente }: { cliente: ClienteInfoI }) {
   const [genero, setGenero] = useState('')
   const { user } = useAuth()
 
+  const navigate = useNavigate()
+
   const handleSubmit = () => {
     axios.post(`${API_URL}/register`, { ...cliente, genero, user: user.username })
-      .then(res => console.log(res))
+      .then(res => {
+        console.log(res.data.message)
+        toast.success('Cliente creado con éxito', { description: 'Se ha creado el cliente fiel con éxito' })
+        return setTimeout(() => navigate('/registrados'), 3000)
+      })
       .catch(err => {
         if (err.response.status === 400) {
           toast.error((err.response.data?.message || 'Error al crear cliente'),

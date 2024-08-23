@@ -132,9 +132,6 @@ export async function createClienteFiel(req: Request, res: Response) {
       return res.status(500).json({ message: 'Error al crear cliente' })
     }
 
-   
-  
-
   } catch (error) {
     
     console.log(error);

@@ -1,19 +1,14 @@
-import { NavLink } from 'react-router-dom'
+import { LogoutAndDeleteToken } from '../services/logOut'
 import { useAuth } from '../auth/AuthProvider'
+import { NavLink } from 'react-router-dom'
 import { UserIcon } from './icons'
-import axios from 'axios'
-import { LOGIN_URL } from '../utils/contanst'
 
 function NavBar () {
   const { user, setIsAuthenticated } = useAuth()
 
   const handleLogout = () => {
-    const token = document.cookie
-    axios.post(`${LOGIN_URL}/logout`, { token })
-      .then((res) => {
-        if (res.status === 200) setIsAuthenticated(false)
-      })
-      .catch(err => console.log(err))
+    LogoutAndDeleteToken()
+    setIsAuthenticated(false)
   }
 
   return (
