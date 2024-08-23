@@ -1,6 +1,5 @@
 import zod from 'zod';
 
-
 const ClienteSchema = zod.object({
   cedula: zod.number({
     message: 'Cedula must be a number',
@@ -27,6 +26,10 @@ const ClienteSchema = zod.object({
 export type ClienteType = zod.infer<typeof ClienteSchema>
 
 export function validateCliente (client: ClienteType){
+
+  client.telefono = client.telefono.toString()
+  client.telwhats = client.telwhats.toString()
+
   return ClienteSchema.safeParseAsync(client)
 }
 

@@ -45,7 +45,10 @@ const ClieFielSchema = zod.object({
 
 export type ClieFielType = zod.infer<typeof ClieFielSchema>
 
-function ValidateSchemaClienteFiel (data: any) {
+function ValidateSchemaClienteFiel (data: ClieFielType) {
+  data.telefono = data.telefono.toString()
+  data.telwhats = data.telwhats.toString()
+
   return ClieFielSchema.safeParseAsync(data)
 }
 
