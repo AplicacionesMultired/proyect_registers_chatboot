@@ -87,8 +87,9 @@ function ClienteProfile () {
   }
 
   return (
-    <section className='mx-1 h-[83vh] overflow-y-auto rounded-md'>
-      <button className='bg-red-500 p-2 hover:bg-red-700 rounded-md w-64 text-white font-medium mb-4'
+    <section className='mx-1 h-[80vh] overflow-y-auto rounded-md relative'>
+
+      <button className='bg-red-500 p-2 hover:bg-red-700 rounded-md w-64 text-white font-medium mb-4 absolute'
         onClick={() => navigate('/sinregistro')}>
         Volver Clientes Sin Registro
       </button>
@@ -99,6 +100,7 @@ function ClienteProfile () {
         </header>
 
         <div className=''>
+
           <h1 className='text-2xl font-semibold text-center pb-2'>Información Cliente</h1>
           <article className='font-semibold text-xl'>
             <p>Nombres: <span className='font-normal'>{cliente?.nombre}</span></p>

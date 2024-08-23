@@ -8,6 +8,7 @@ import { Pyumbo } from '../models/pyumbo'
 import { Pjamundi } from '../models/pjamundi';
 import { ValidateSchemaClienteFiel } from '../schemas/ClieFiel.Schema';
 import { ZodIssue } from 'zod';
+import { sendEmail } from '../services/nodemailer';
 
 export async function getClientBycc(req:Request, res: Response) {
   const { company } = req.query
@@ -125,6 +126,7 @@ export async function createClienteFiel(req: Request, res: Response) {
     if(query.rowsAffected === 1){
       await connection.commit()
       await connection.close()
+      await sendEmail(result.data)
       return res.status(201).json({ message: 'Cliente creado con éxito' })
     } else {
       await connection.rollback()
