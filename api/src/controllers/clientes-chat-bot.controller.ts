@@ -101,3 +101,14 @@ export async function updateClienteSinRegistro (req: Request, res: Response) {
   }
 
 }
+
+export async function createClienteFiel(req: Request, res: Response) {
+  console.log(req.body);
+  
+  try {
+    
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: 'Internal server error' })
+  }
+}

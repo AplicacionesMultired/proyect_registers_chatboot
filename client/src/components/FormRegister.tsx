@@ -7,7 +7,9 @@ function FormRegister ({ cliente }: { cliente: ClienteInfoI }) {
   const [genero, setGenero] = useState('')
 
   const handleSubmit = () => {
-    axios.post(`${API_URL}`)
+    axios.post(`${API_URL}/register`, { ...cliente, genero })
+      .then(res => console.log(res))
+      .catch(err => console.log(err))
   }
 
   return (
