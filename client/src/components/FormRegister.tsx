@@ -17,7 +17,7 @@ function FormRegister ({ cliente }: { cliente: ClienteInfoI }) {
       .then(res => {
         console.log(res.data.message)
         toast.success('Cliente creado con éxito', { description: 'Se ha creado el cliente fiel con éxito' })
-        return setTimeout(() => navigate('/registrados'), 3000)
+        return setTimeout(() => navigate('/registrados'), 2000)
       })
       .catch(err => {
         if (err.response.status === 400) {
