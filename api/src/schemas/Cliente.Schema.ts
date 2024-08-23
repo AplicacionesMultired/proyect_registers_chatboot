@@ -17,7 +17,7 @@ const ClienteSchema = zod.object({
   correo: zod.string({
     message: 'Correo must be a string',
     description: 'Correo is required',
-  }),
+  }).email({ message: 'Correo no tiene un formato valido => @ .com .co ' }),
   telwhats: zod.string({
     message: 'Telwhats must be a string',
     description: 'Telwhats is required',

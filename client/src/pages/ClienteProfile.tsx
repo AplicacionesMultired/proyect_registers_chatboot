@@ -68,8 +68,13 @@ function ClienteProfile () {
       }
       )
       .catch(error => {
-        console.log(error)
-        toast.error('Error', { description: 'Ha ocurrido un error al actualizar el cliente' })
+        if (error.response.status === 400) {
+          toast.error((error.response.data.message || 'Error Al Actualizar'),
+            { description: (error.response.data.errors[0] || 'No se puede actualizar el usuario') }
+          )
+        } else {
+          toast.error('Error Al Actualizar', { description: 'Ha ocurrido un error al actualizar el cliente' })
+        }
       })
   }
 
