@@ -6,16 +6,26 @@ import axios from 'axios'
 export function useClients (option: string, company: string) {
   const [clientes, setClientes] = useState<ClientesChatBot[]>([])
   const [search, setSearch] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(false)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    axios.get(`${API_URL}/c-chat-bot`, { params: { company, option } })
-      .then(res => {
-        console.log(res.data)
-        setClientes(res.data)
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    const fetchData = async () => {
+      setLoading(true)
+      setError(null)
+
+      try {
+        const { data } = await axios.get(`${API_URL}/c-chat-bot`, { params: { company, option } })
+        console.log(data)
+        setClientes(data)
+      } catch (error) {
+        setError('Ocurrio un error al cargar los clientes')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
   }, [option, company])
 
   const clientesFilter = useMemo(() => {
@@ -24,5 +34,5 @@ export function useClients (option: string, company: string) {
     })
   }, [clientes, search])
 
-  return { clientesFilter, search, setSearch }
+  return { clientesFilter, search, setSearch, loading, error }
 }
