@@ -49,6 +49,27 @@ function userCreated(): string {
           margin-top: 20px;
           text-align: start;
         }
+
+        /* Media query for small screens */
+        @media (max-width: 600px) {
+          body {
+            height: auto;
+            padding: 20px;
+          }
+          .confirmation-container {
+            padding: 20px;
+            max-width: 100%;
+          }
+          .confirmation-container h2 {
+            font-size: 1.5rem;
+          }
+          .confirmation-container p {
+            font-size: 1rem;
+          }
+          .art-1, .art-2 {
+            font-size: 0.9rem;
+          }
+        }
       </style>
     </head>
     <body>
