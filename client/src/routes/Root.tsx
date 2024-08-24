@@ -21,8 +21,8 @@ const Root = () => {
         <>
           <NavBar /><section className='pt-1'>
             <Outlet />
-          </section><Toaster position='top-right' duration={3000} />
-          <Toaster position='top-right' visibleToasts={3} duration={4000} />
+          </section>
+          <Toaster richColors position='top-right' visibleToasts={3} duration={4000} />
         </>
         )
   )
