@@ -1,14 +1,14 @@
 import { Request, Response } from 'express'
 
 import { getClientesFromDB } from '../services/clientes-oracle.service'
-import { connPool } from '../connections/oracleDB'
 import { validateCliente } from '../schemas/Cliente.Schema';
+import { connPool } from '../connections/oracleDB'
 
-import { Pyumbo } from '../models/pyumbo' 
-import { Pjamundi } from '../models/pjamundi';
 import { ValidateSchemaClienteFiel } from '../schemas/ClieFiel.Schema';
-import { ZodIssue } from 'zod';
 import { sendEmail } from '../services/nodemailer';
+import { Pjamundi } from '../models/pjamundi';
+import { Pyumbo } from '../models/pyumbo' 
+import { ZodIssue } from 'zod';
 
 export async function getClientBycc(req:Request, res: Response) {
   const { company } = req.query
@@ -83,7 +83,7 @@ export async function getClientsSinRegistro (req: Request, res: Response){
 export async function updateClienteSinRegistro (req: Request, res: Response) {
   const { data, company } = req.body
 
-  const result = await validateCliente(data)
+  const result = await validateCliente(data) //TODO: valida la data que se recibe desde el front 
 
   if (!result.success) {
     return res.status(400).json({ message: 'Error en la validación de datos', 
