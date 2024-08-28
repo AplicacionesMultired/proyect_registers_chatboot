@@ -1,10 +1,10 @@
 import { ClienteInfoI } from '../types/Clientes.chat.bot'
-import { API_URL } from '../utils/contanst'
 import { useState } from 'react'
 import { toast } from 'sonner'
-import axios from 'axios'
+
 import { useAuth } from '../auth/AuthProvider'
 import { useNavigate } from 'react-router-dom'
+import { registerClient } from '../services/clientService'
 
 function FormRegister ({ cliente }: { cliente: ClienteInfoI }) {
   const [genero, setGenero] = useState('')
@@ -13,20 +13,19 @@ function FormRegister ({ cliente }: { cliente: ClienteInfoI }) {
   const navigate = useNavigate()
 
   const handleSubmit = () => {
-    axios.post(`${API_URL}/register`, { ...cliente, genero, user: user.username })
-      .then(res => {
-        console.log(res.data.message)
-        toast.success('Cliente creado con éxito', { description: 'Se ha creado el cliente fiel con éxito' })
-        return setTimeout(() => navigate('/registrados'), 2000)
-      })
-      .catch(err => {
-        if (err.response.status === 400) {
-          toast.error((err.response.data?.message || 'Error al crear cliente'),
-            { description: err.response.data?.errors[0] || 'No se puede crear cliente, consulte al admin' })
-        } else {
-          toast.error('Error al crear cliente', { description: 'Ha ocurrido un error al crear el cliente' })
+    toast.promise(registerClient(cliente, genero, user.username), {
+      loading: 'Creando Cliente...',
+      success: (data) => {
+        console.log(data)
+        setTimeout(() => navigate('/registrados'), 2000)
+        return 'Cliente Creado Correctamente'
+      },
+      error: (data) => {
+        if (data.response.status === 400) {
+          return data.response.data.message || 'Error al crear cliente'
         }
-      })
+      }
+    })
   }
 
   return (
