@@ -19,7 +19,8 @@ const Root = () => {
       ? <CambiarCompany />
       : (
         <>
-          <NavBar /><section className='pt-1'>
+          <NavBar />
+          <section className='pt-1'>
             <Outlet />
           </section>
           <Toaster richColors position='top-right' visibleToasts={3} duration={4000} />

@@ -1,10 +1,11 @@
 import TableClientes from '../components/TableClientes'
 import { useClients } from '../hooks/useClients'
 import { useAuth } from '../auth/AuthProvider'
+import { Loading } from '../components/ui/Loading'
 
 function SinRegistro () {
   const { user } = useAuth()
-  const { clientesFilter, search, setSearch } = useClients('sin-registro', user.company)
+  const { clientesFilter, search, setSearch, loading } = useClients('sin-registro', user.company)
 
   return (
     <>
@@ -16,14 +17,11 @@ function SinRegistro () {
         />
       </header>
 
-      <section className='mx-1  p-2 h-[75vh] overflow-y-auto rounded-md'>
-        {clientesFilter.length > 0
-          ? <TableClientes clientes={clientesFilter} />
-          : (
-            <div className='text-center'>
-              <h1 className='text-2xl'>No hay clientes sin registro</h1>
-            </div>
-            )
+      <section className='mx-1 p-2 h-[75vh] overflow-y-auto rounded-md'>
+        {
+          clientesFilter.length > 0
+            ? <TableClientes clientes={clientesFilter} />
+            : loading && <section className='w-full flex justify-center text-2xl'><Loading message='Cargando Clientes Sín Registrar ...' /></section>
         }
       </section>
     </>
