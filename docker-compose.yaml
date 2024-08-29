@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  web-chat:
+    image: nginx:stable-alpine3.19-slim
+    container_name: web-chat
+    restart: always
+    volumes:
+      - ./dist:/usr/share/nginx/html
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - api-chat
+    networks:
+      - red-gane-int
+
+  api-chat:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    image: api-chat:v_1.0
+    container_name: api-chat
+    restart: always
+    networks:
+      - red-gane-int
+
+networks:
+  red-gane-int:
+    external: true

@@ -1,0 +1,114 @@
+import { ClieFielType } from "../schemas/ClieFiel.Schema"
+
+function deleteUser(user: ClieFielType, movit: string): string {
+  return` 
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Confirmation Message</title>
+      <style>
+        body {
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          background-color: #e9ecef;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+        }
+
+        .confirmation-container {
+          background-color: #ffffff;
+          padding: 30px;
+          border-radius: 10px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          max-width: 600px;
+          text-align: center;
+        }
+
+        .confirmation-container h2 {
+          color: #0a8827;
+          margin-bottom: 20px;
+        }
+
+        .confirmation-container p {
+          color: #495057;
+        }
+
+        .confirmation-container strong {
+          color: #0e73d8;
+        }
+
+        .art-1 {
+          font-size: 1rem;
+          font-weight: 500;
+          margin-bottom: 20px;
+          text-align: justify;
+        }
+
+        .art-2 {
+          font-size: .9rem;
+          font-weight: 500;
+          margin-top: 20px;
+          text-align: start;
+        }
+
+        /* Media query for small screens */
+        @media (max-width: 600px) {
+          body {
+            height: auto;
+            padding: 20px;
+          }
+
+          .confirmation-container {
+            padding: 20px;
+            max-width: 100%;
+          }
+
+          .confirmation-container h2 {
+            font-size: 1.5rem;
+          }
+
+          .confirmation-container p {
+            font-size: 1rem;
+          }
+
+          .art-1,
+          .art-2 {
+            font-size: 0.9rem;
+          }
+        }
+      </style>
+    </head>
+
+    <body>
+      <div class="confirmation-container">
+        <h2>Grupo Empresarial Multired S.A.</h2>
+        <article class="art-1">
+          Cordial Saludo.
+          Mediante la presente solicitamos formal y amablemente la eliminación de los datos personales del siguiente usuario:
+          <p>documento: <span>${user.cedula}</span></p>
+          <p>nombres: <span>${user.name1} ${user.name2} ${user.lastname1} ${user.lastname2}</span></p>
+          <p>email: <span>${user.correo}</span></p>
+          
+        </article>
+        <p>
+          <span>Motivo: </span>
+          ${movit}
+        </p>
+        <article class="art-2">
+          Atentamente:<br>
+          <strong>Asistente Comercial</strong> <br>
+        </article>
+      </div>
+    </body>
+
+    </html>
+  `
+}
+
+export { deleteUser }

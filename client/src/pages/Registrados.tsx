@@ -1,10 +1,11 @@
 import TableClientes from '../components/TableClientes'
 import { useClients } from '../hooks/useClients'
 import { useAuth } from '../auth/AuthProvider'
+import { Loading } from '../components/ui/Loading'
 
 function Registrados () {
   const { user } = useAuth()
-  const { clientesFilter, search, setSearch } = useClients('con-registro', user.company)
+  const { clientesFilter, search, setSearch, loading } = useClients('con-registro', user.company)
 
   return (
     <>
@@ -16,14 +17,11 @@ function Registrados () {
         />
       </header>
 
-      <section className='mx-1  p-2 h-[75vh] overflow-y-auto rounded-md'>
-        {clientesFilter.length > 0
-          ? <TableClientes clientes={clientesFilter} />
-          : (
-            <div className='text-center'>
-              <h1 className='text-2xl'>No Existe Clientes Registrados</h1>
-            </div>
-            )
+      <section className='mx-1 p-2 h-[75vh] overflow-y-auto rounded-md'>
+        {
+          clientesFilter.length > 0
+            ? <TableClientes clientes={clientesFilter} />
+            : loading && <section className='w-full flex justify-center text-2xl'><Loading message='Cargando Clientes Registrados ...' /></section>
         }
       </section>
     </>

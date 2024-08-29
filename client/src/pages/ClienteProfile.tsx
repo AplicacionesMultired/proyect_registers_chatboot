@@ -10,6 +10,7 @@ import { FormEditClien } from '../components/FormEditClient'
 import { toast } from 'sonner'
 import { API_URL } from '../utils/contanst'
 import FormRegister from '../components/FormRegister'
+import FormDeleteClient from '../components/FormDeleteClient'
 
 function ClienteProfile () {
   const { cc } = useParams<{ cc: string }>()
@@ -134,6 +135,7 @@ function ClienteProfile () {
       <section>
         {stateclick === 'Editar' && (<FormEditClien handleUpdateUser={handleUpdateUser} handleChangeUser={handleChangeUser} clienteInfo={clienteInfo} />)}
         {stateclick === 'Registrar' && (<FormRegister cliente={clienteInfo} />)}
+        { stateclick === 'Eliminar' && (<FormDeleteClient cliente={clienteInfo} />)}
       </section>
 
     </section>
