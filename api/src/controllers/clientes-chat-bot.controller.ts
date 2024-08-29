@@ -145,3 +145,15 @@ export async function createClienteFiel(req: Request, res: Response) {
     return res.status(500).json({ message: 'Internal server error' })
   }
 }
+
+export async function deleteClient(req:Request, res: Response) {
+  console.log(req.body);
+  
+  try {
+    
+    return res.status(200).json('ok')
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json('someting went wrong')
+  }
+}
