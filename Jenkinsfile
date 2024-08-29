@@ -41,7 +41,7 @@ pipeline {
         stage('delete images'){
             steps{
                 script {
-                    def images = 'api-chat:v_1.0'
+                    def images = 'api-chat:v_1.2'
                     if (sh(script: "docker images -q ${images}", returnStdout: true).trim()) {
                         sh "docker rmi ${images}"
                     } else {

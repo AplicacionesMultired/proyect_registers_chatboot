@@ -17,7 +17,7 @@ services:
     build:
       context: ./api
       dockerfile: Dockerfile
-    image: api-chat:v_1.0
+    image: api-chat:v_1.2
     container_name: api-chat
     restart: always
     networks:

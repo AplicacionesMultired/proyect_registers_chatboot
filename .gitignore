@@ -28,3 +28,7 @@ dist
 node_modules
 .env
 yarn.lock
+
+instantclient-basic-linux.x64-11.2.0.4.0.zip
+node-v20.17.0-linux-x64.tar.xz
+tnsnames.ora
