@@ -21,8 +21,8 @@ RUN mkdir -p /opt/oracle && \
     ln -s libocci.so.11.1 libocci.so && \
     echo /opt/oracle/instantclient_11_2 > /etc/ld.so.conf.d/oracle-instantclient.conf && \
     ldconfig && \
-    mkdir -p /opt/oracle/network/admin && \
-    mv /app/tnsnames.ora /opt/oracle/network/admin && \
+    mkdir -p /opt/oracle/instantclient_11_2/network/admin && \
+    mv /app/tnsnames.ora /opt/oracle/instantclient_11_2/network/admin && \
     rm /opt/oracle/instantclient-basic-linux.x64-11.2.0.4.0.zip
 
 # Download and set up Node.js
