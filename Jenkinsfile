@@ -30,8 +30,8 @@ pipeline {
         stage('Copy packages for build image'){
           steps {
               script {
-                sh 'cp -r /home/containers/utils_for_images/instantclient-basic-linux.x64-11.2.0.4.0.zip ./api'
-                sh 'cp -r /home/containers/utils_for_images/node-v20.17.0-linux-x64.tar.xz ./client'
+                sh 'cp /home/containers/utils_for_images/instantclient-basic-linux.x64-11.2.0.4.0.zip ./api'
+                sh 'cp /home/containers/utils_for_images/node-v20.17.0-linux-x64.tar.xz ./api'
             }
           }
         }
