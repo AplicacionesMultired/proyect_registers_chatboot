@@ -5,7 +5,7 @@ import { validateCliente } from '../schemas/Cliente.Schema';
 import { connPool } from '../connections/oracleDB'
 
 import { ValidateSchemaClienteFiel } from '../schemas/ClieFiel.Schema';
-import { sendEmail } from '../services/nodemailer';
+import { sendEmail, sendEmailDelete } from '../services/nodemailer';
 import { Pjamundi } from '../models/pjamundi';
 import { Pyumbo } from '../models/pyumbo' 
 import { ZodIssue } from 'zod';
@@ -147,11 +147,11 @@ export async function createClienteFiel(req: Request, res: Response) {
 }
 
 export async function deleteClient(req:Request, res: Response) {
-  console.log(req.body);
+  const { user, motivo } = req.body 
   
   try {
-    
-    return res.status(200).json('ok')
+    const response = await sendEmailDelete(user, motivo)
+    return res.status(200).json({ message: response || 'Correo enviado' })
   } catch (error) {
     console.log(error);
     return res.status(500).json('someting went wrong')

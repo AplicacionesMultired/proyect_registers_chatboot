@@ -7,3 +7,12 @@ export const registerClient = async (cliente: ClienteInfoI, genero: string, user
   const response = await axios.post(`${API_URL}/register`, { ...cliente, genero, user: username })
   return response.data.message
 }
+
+export const deleteClient = async (cliente: ClienteInfoI, motivo: string) => {
+  try {
+    const res = await axios.post(`${API_URL}/delete-client`, { user: cliente, motivo })
+    return res.data.message as string
+  } catch (error) {
+    throw new Error('Error Al Generar Solicitud Eliminación')
+  }
+}

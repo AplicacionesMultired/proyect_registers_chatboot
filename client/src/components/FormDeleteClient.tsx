@@ -1,19 +1,26 @@
-import { useState } from 'react'
+import { toast } from 'sonner'
 import { ClienteInfoI } from '../types/Clientes.chat.bot'
-import axios from 'axios'
-import { API_URL } from '../utils/contanst'
+import { useState } from 'react'
+import { deleteClient } from '../services/clientService'
+import { useNavigate } from 'react-router-dom'
 
 function FormDeleteClient ({ cliente }: { cliente: ClienteInfoI }) {
   const [motivo, setMotivo] = useState('')
+  const navigate = useNavigate()
 
   const handleSubmit = () => {
-    axios.post(`${API_URL}/delete-client`, { ...cliente, motivo })
-      .then((res) => {
-        console.log(res.data)
-      })
-      .catch((error) => {
-        console.error(error)
-      })
+    toast.promise(deleteClient(cliente, motivo), {
+      loading: 'Enviando Solicitud...',
+      success: (data) => {
+        setTimeout(() => navigate('/registrados'), 2000)
+        return data
+      },
+      error: (data) => {
+        if (data.response.status === 400) {
+          return data.response.data.message || 'Error al enviar solicitud'
+        }
+      }
+    })
   }
 
   return (
